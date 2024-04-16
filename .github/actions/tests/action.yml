@@ -1,0 +1,72 @@
+name: "test"
+description: "Run the tests and lint"
+inputs:
+  operating_system:
+    description: "OS of the runner"
+    required: true
+  python_version:
+    description: "Python version used by the runner"
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+    - name: "Create micromamba environment"
+      uses: mamba-org/setup-micromamba@v1
+      with:
+        environment-name: libsemigroups
+        create-args: >-
+          python=${{ input.python_version }}
+          fmt
+    - name: "Set environment variables . . ."
+      run: |
+        echo "PKG_CONFIG_PATH=$MAMBA_ROOT_PREFIX/envs/libsemigroups/lib/pkgconfig:$MAMBA_ROOT_PREFIX/envs/libsemigroups/share/pkgconfig:/usr/local/lib/pkgconfig" >> $GITHUB_ENV
+        echo "LD_LIBRARY_PATH=$MAMBA_ROOT_PREFIX/envs/libsemigroups/lib:/usr/local/lib" >> $GITHUB_ENV
+      shell: bash -l {0}
+    - name: "Add Python to path . . ."
+      run: |
+        echo "PATH=$MAMBA_ROOT_PREFIX/envs/libsemigroups/bin:$PATH" >> $GITHUB_ENV
+      shell: bash -l {0}
+      if: ${{ inputs.operating_system == 'macOS-latest'}}
+    - name: "Install libsemigroups dependencies . . ."
+      run: |
+        brew install autoconf automake
+      shell: bash -l {0}
+      if: ${{ inputs.operating_system == 'macOS-latest' }}
+    - name: "Install libsemigroups . . ."
+      run: |
+        git clone --depth 1 --branch v3 https://github.com/libsemigroups/libsemigroups.git
+        cd libsemigroups
+        ./autogen.sh && ./configure CXXFLAGS='-O3 -g'  --disable-hpcombi --with-external-fmt && sudo make install -j8
+      shell: bash -l {0}
+    - name: "Python version . . ."
+      run: |
+        python --version
+        pip3 --version
+      shell: bash -l {0}
+      - name: "Pip installing requirements.txt . . ."
+        run: |
+          pip3 install -r requirements.txt
+        shell: bash -l {0}
+      - name: "Pip3 installing libsemigroups_pybind11 . . ."
+        run: |
+          pip3 install . -v
+        shell: bash -l {0}
+      - name: "python -m pytest -vv tests/test_*.py . . ."
+        run: |
+          python -m pytest -vv tests/test_*.py
+        shell: bash -l {0}
+      - name: "Run doc tests . . ."
+        run: |
+          etc/make-doc.sh  # so that all files are generated!
+          cd docs
+          python -m sphinx -b doctest -d _build/doctrees source _build/doctest
+        shell: bash -l {0}
+      - name: "Pip3 installing pylint + cpplint . . ."
+        run: |
+          pip3 install pylint cpplint
+        shell: bash -l {0}
+      - name: "Running pylint and cpplint . . ."
+        run:  |
+          python -m pylint setup.py tests/*.py libsemigroups_pybind11/*.py
+          python -m cpplint src/*.hpp src/*.cpp
+        shell: bash -l {0}
