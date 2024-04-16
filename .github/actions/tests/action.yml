@@ -15,7 +15,7 @@ runs:
       with:
         environment-name: libsemigroups
         create-args: >-
-          python=${{ input.python_version }}
+          python=${{ inputs.python_version }}
           fmt
     - name: "Set environment variables . . ."
       run: |
