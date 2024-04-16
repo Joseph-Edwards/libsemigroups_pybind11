@@ -43,30 +43,30 @@ runs:
         python --version
         pip3 --version
       shell: bash -l {0}
-      - name: "Pip installing requirements.txt . . ."
-        run: |
-          pip3 install -r requirements.txt
-        shell: bash -l {0}
-      - name: "Pip3 installing libsemigroups_pybind11 . . ."
-        run: |
-          pip3 install . -v
-        shell: bash -l {0}
-      - name: "python -m pytest -vv tests/test_*.py . . ."
-        run: |
-          python -m pytest -vv tests/test_*.py
-        shell: bash -l {0}
-      - name: "Run doc tests . . ."
-        run: |
-          etc/make-doc.sh  # so that all files are generated!
-          cd docs
-          python -m sphinx -b doctest -d _build/doctrees source _build/doctest
-        shell: bash -l {0}
-      - name: "Pip3 installing pylint + cpplint . . ."
-        run: |
-          pip3 install pylint cpplint
-        shell: bash -l {0}
-      - name: "Running pylint and cpplint . . ."
-        run:  |
-          python -m pylint setup.py tests/*.py libsemigroups_pybind11/*.py
-          python -m cpplint src/*.hpp src/*.cpp
-        shell: bash -l {0}
+    - name: "Pip installing requirements.txt . . ."
+      run: |
+        pip3 install -r requirements.txt
+      shell: bash -l {0}
+    - name: "Pip3 installing libsemigroups_pybind11 . . ."
+      run: |
+        pip3 install . -v
+      shell: bash -l {0}
+    - name: "python -m pytest -vv tests/test_*.py . . ."
+      run: |
+        python -m pytest -vv tests/test_*.py
+      shell: bash -l {0}
+    - name: "Run doc tests . . ."
+      run: |
+        etc/make-doc.sh  # so that all files are generated!
+        cd docs
+        python -m sphinx -b doctest -d _build/doctrees source _build/doctest
+      shell: bash -l {0}
+    - name: "Pip3 installing pylint + cpplint . . ."
+      run: |
+        pip3 install pylint cpplint
+      shell: bash -l {0}
+    - name: "Running pylint and cpplint . . ."
+      run:  |
+        python -m pylint setup.py tests/*.py libsemigroups_pybind11/*.py
+        python -m cpplint src/*.hpp src/*.cpp
+      shell: bash -l {0}
