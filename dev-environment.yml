@@ -10,6 +10,7 @@ dependencies:
   - bs4
   - codespell
   - cpplint
+  - doxygen
   - fmt
   - ipython
   - lxml
