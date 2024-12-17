@@ -50,6 +50,10 @@ jobs:
       - name: "Pip installing requirements.txt . . ."
         run: |
           pip3 install -r requirements.txt
+      - name: "List installed packages . . ."
+        run: |
+          pip3 list
+          micromamba list
       - name: "Pip3 installing libsemigroups_pybind11 . . ."
         run: |
           echo $PKG_CONFIG_PATH
