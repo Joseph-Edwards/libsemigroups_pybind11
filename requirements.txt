@@ -50,7 +50,7 @@ pluggy==1.6.0
     # via pytest
 pybind11==3.0.1
     # via libsemigroups_pybind11 (pyproject.toml::build-system.requires)
-pybtex==0.25.1
+pybtex==0.26.1
     # via
     #   pybtex-docutils
     #   sphinxcontrib-bibtex
