@@ -42,7 +42,6 @@ classifiers = [
 dependencies = ["graphviz>=0.21", "numpy>=2.2.6", "typing-extensions>=4.15.0"]
 
 description   = "A python package for the libsemigroups C++ library."
-dynamic       = ["version"]
 license       = "GPL-3.0-or-later"
 license-files = ["LICENSE"]
 # TODO: Uncomment and update
@@ -50,6 +49,7 @@ license-files = ["LICENSE"]
 name            = "libsemigroups_pybind11"
 readme          = "README.md"
 requires-python = ">=3.10"
+version         = "1.4.6"
 
 [project.urls]
 Changelog     = "https://libsemigroups.github.io/libsemigroups_pybind11/changelog.html"
@@ -78,11 +78,7 @@ test = ["pytest>=9.1.1"]
 [dependency-groups]
 # This list should contain any package used in the development of
 # libsemigroups_pybind11.
-dev  = [
-    "ipython>=9.6.0",
-    "pre-commit>=4.6.2",
-    { include-group = "lint" },
-]
+dev  = ["ipython>=9.6.0", "pre-commit>=4.6.2", { include-group = "lint" }]
 lint = ["codespell>=2.4.1", "cpplint>=2.0.2", "pylint>=4.0.2", "ruff>=0.14.2"]
 
 ###################################################################

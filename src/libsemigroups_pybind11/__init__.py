@@ -6,6 +6,8 @@
 
 """This package provides the user-facing python part of libsemigroups_pybind11"""
 
+from importlib.metadata import version
+
 from . import (
     action,
     adapters,
@@ -35,7 +37,8 @@ from . import (
     word_graph,
     words,
 )
-from ._version import __version__
+
+# from ._version import __version__
 from .action import Action, LeftAction, RightAction
 from .adapters import ImageLeftAction, ImageRightAction
 from .alphabet import Alphabet, validate
@@ -168,6 +171,8 @@ wr_cmp = _wrap_cxx_free_fn(_wr_cmp)
 wt_lenlex_cmp = _wrap_cxx_free_fn(_wt_lenlex_cmp)
 wt_lex_cmp = _wrap_cxx_free_fn(_wt_lex_cmp)
 
+
+__version__ = version("libsemigroups_pybind11")
 
 __all__ = [
     "__version__",
