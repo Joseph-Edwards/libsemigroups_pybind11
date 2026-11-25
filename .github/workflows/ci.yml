@@ -22,7 +22,7 @@ jobs:
             # clone libsemigroups as if it were a branch. For example
             # git clone --branch v3.6.3 ...
             # works
-            branch="$(python3 -c 'from build_tools import minimum_libsemigroups_version; print(minimum_libsemigroups_version())')"
+            branch="v$(python3 -c 'from build_tools import minimum_libsemigroups_version; print(minimum_libsemigroups_version())')"
           else
             branch="main"
           fi
