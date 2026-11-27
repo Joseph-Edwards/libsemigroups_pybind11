@@ -62,7 +62,7 @@ pygments==2.20.0
     #   sphinx
 pytest==9.1.1
     # via libsemigroups_pybind11 (pyproject.toml)
-pyyaml==6.0.3
+pyyaml==6.0.4
     # via pybtex
 requests==2.34.2
     # via sphinx
